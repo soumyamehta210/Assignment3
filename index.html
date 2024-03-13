@@ -88,9 +88,12 @@
     <script>
         const button = document.getElementById('iframe-button');
         button.addEventListener('click', function () {
-            console.log("MY GOD")
             window.dataLayer = window.dataLayer || [];
-            function gtag() { window.dataLayer.push(arguments); }
+            function gtag() {
+                window.dataLayer.push(arguments);
+            }
+            gtag("js", new Date());
+            gtag("config", "G-L79QGQVFDR");
             gtag("event", "GAStartTrial_SR", {
                 "send_to": "G-L79QGQVFDR"
             });
