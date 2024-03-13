@@ -10,12 +10,12 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://kit.fontawesome.com/221c2c9d5f.js" crossorigin="anonymous"></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-L79QGQVFDR"></script>
-    <!-- <script>
+    <script>
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
         gtag('config', 'G-L79QGQVFDR');
-    </script> -->
+    </script>
 </head>
 
 <body>
@@ -80,20 +80,15 @@
             src="https://embed.dev.wotnot.io/7MkVBzx7pD46100623816959lsymJNpl/bot/7xCT4mMectS3132520337143s0MAdDAo?display_header=false&history_retention=false"
             frameborder="0"></iframe> -->
         <div id="container2"></div>
-        <!-- <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=G-L79QGQVFDR" height="0" width="0"
-                style="display:none;visibility:hidden"></iframe></noscript> -->
     </div>
     <script src="script.js"></script>
     <!-- <script src='https://app.dev.wotnot.io/chat-widget/7MkVBzx7pD46100623816959lsymJNpl.js' defer></script> -->
     <script>
         const button = document.getElementById('iframe-button');
         button.addEventListener('click', function () {
+            console.log("MY GOD")
             window.dataLayer = window.dataLayer || [];
-            function gtag() {
-                window.dataLayer.push(arguments);
-            }
-            gtag("js", new Date());
-            gtag("config", "G-L79QGQVFDR");
+            function gtag() { window.dataLayer.push(arguments); }
             gtag("event", "GAStartTrial_SR", {
                 "send_to": "G-L79QGQVFDR"
             });
