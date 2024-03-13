@@ -93,6 +93,7 @@
             });
         });
         window.addEventListener('message', function (event) {
+            console.log("HERE EVENT", event)
             const isValidJson = (text) => {
                 try {
                     JSON.parse(text);
