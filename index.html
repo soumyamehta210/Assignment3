@@ -11,7 +11,6 @@
     <script src="https://kit.fontawesome.com/221c2c9d5f.js" crossorigin="anonymous"></script>
     <script async type="text/javascript"
         src="https://www.googletagmanager.com/gtag/js?id=G-L79QGQVFDR&amp;l=dataLayer&amp;cx=c"></script>
-
 </head>
 
 <body>
@@ -78,6 +77,31 @@
     </div>
     <script src="script.js"></script>
     <!-- <script src='https://app.dev.wotnot.io/chat-widget/7MkVBzx7pD46100623816959lsymJNpl.js' defer></script> -->
+    <script>
+        window.addEventListener('message', function (event) {
+            const isValidJson = (text) => {
+                try {
+                    JSON.parse(text);
+                    return true;
+                } catch (e) {
+                    return false;
+                }
+            }
+            if (event?.data && isValidJson(event?.data)) {
+                const eventData = JSON.parse(event?.data);
+                if (eventData.type === "GTM_TAG") {
+                    console.log("FROM PARENT", window.location.host, eventData)
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag() { window.dataLayer.push(arguments); }
+                    gtag('js', new Date());
+                    gtag("config", "G-L79QGQVFDR");
+                    gtag("event", "GAStartTrial_SR", {
+                        "send_to": "G-L79QGQVFDR"
+                    });
+                }
+            }
+        });
+    </script>
 </body>
 
 </html>
