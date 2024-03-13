@@ -93,7 +93,6 @@
             });
         });
         window.addEventListener('message', function (event) {
-            console.log("HERE EVENT", event)
             const isValidJson = (text) => {
                 try {
                     JSON.parse(text);
@@ -103,10 +102,8 @@
                 }
             }
             if (event?.data && isValidJson(event?.data)) {
-                console.log(event.data, "from parent window")
                 const eventData = JSON.parse(event?.data);
-                console.log(eventData, "event data from parent window")
-                if (eventData.type === "GTM_TAG") {
+                if (eventData.type === "WN_CUSTOM_GA_EVENT") {
                     eval(eventData.data)
                 }
             }
