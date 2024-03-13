@@ -86,7 +86,6 @@
     <script>
         const button = document.getElementById('iframe-button');
         button.addEventListener('click', function () {
-            console.log("MY GOD")
             window.dataLayer = window.dataLayer || [];
             function gtag() { window.dataLayer.push(arguments); }
             gtag("event", "GAStartTrial_SR", {
@@ -105,7 +104,6 @@
             if (event?.data && isValidJson(event?.data)) {
                 const eventData = JSON.parse(event?.data);
                 if (eventData.type === "GTM_TAG") {
-                    console.log("FROM PARENT", window.location.host, eventData)
                     eval(eventData.data)
                 }
             }
