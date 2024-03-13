@@ -92,22 +92,24 @@
                 "send_to": "G-L79QGQVFDR"
             });
         });
-        // window.addEventListener('message', function (event) {
-        //     const isValidJson = (text) => {
-        //         try {
-        //             JSON.parse(text);
-        //             return true;
-        //         } catch (e) {
-        //             return false;
-        //         }
-        //     }
-        //     if (event?.data && isValidJson(event?.data)) {
-        //         const eventData = JSON.parse(event?.data);
-        //         if (eventData.type === "GTM_TAG") {
-        //             eval(eventData.data)
-        //         }
-        //     }
-        // });
+        window.addEventListener('message', function (event) {
+            const isValidJson = (text) => {
+                try {
+                    JSON.parse(text);
+                    return true;
+                } catch (e) {
+                    return false;
+                }
+            }
+            if (event?.data && isValidJson(event?.data)) {
+                console.log(event.data, "from parent window")
+                const eventData = JSON.parse(event?.data);
+                console.log(eventData, "event data from parent window")
+                if (eventData.type === "GTM_TAG") {
+                    eval(eventData.data)
+                }
+            }
+        });
     </script>
 </body>
 
