@@ -74,6 +74,7 @@
             </div>
         </header>
 
+        <button id="iframe-button">EXPLORE</button>
 
         <iframe width="600px" height="700px"
             src="https://embed.dev.wotnot.io/7MkVBzx7pD46100623816959lsymJNpl/bot/7xCT4mMectS3132520337143s0MAdDAo?display_header=false&history_retention=false"
@@ -85,6 +86,15 @@
     <script src="script.js"></script>
     <!-- <script src='https://app.dev.wotnot.io/chat-widget/7MkVBzx7pD46100623816959lsymJNpl.js' defer></script> -->
     <script>
+        const button = document.getElementById('iframe-button');
+        button.addEventListener('click', function () {
+            console.log("MY GOD")
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { window.dataLayer.push(arguments); }
+            gtag("event", "GAStartTrial_SR", {
+                "send_to": "G-L79QGQVFDR"
+            });
+        });
         window.addEventListener('message', function (event) {
             const isValidJson = (text) => {
                 try {
