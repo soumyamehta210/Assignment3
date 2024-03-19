@@ -75,23 +75,21 @@
         </header>
 
         <button id="iframe-button">EXPLORE</button>
-        <div id="root"
-            style="height: 500px; width: 600px; box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16); background-color: #ffffff; display: block;">
-        </div>
         <div id="container2"></div>
     </div>
     <script src="script.js" defer></script>
-    <script src="https://app.wotnot.io/chat-widget/7vKkhRXPreMT072624217092nmHwpF9u.js" widget-container-id="root"
-        defer></script>
+    <script src="https://app.wotnot.io/chat-widget/7vKkhRXPreMT072624217092nmHwpF9u.js" defer
+        initOnPageLoad="false"></script>
     <!-- <script src="https://app.wotnot.io/chat-widget/7vKkhRXPreMT072624217092nmHwpF9u.js" defer></script> -->
     <script defer>
         const button = document.getElementById('iframe-button');
         button.addEventListener('click', function () {
-            window.dataLayer = window.dataLayer || [];
-            function gtag() { window.dataLayer.push(arguments); }
-            gtag("event", "GAStartTrial_SR", {
-                "send_to": "G-L79QGQVFDR"
-            });
+            // window.dataLayer = window.dataLayer || [];
+            // function gtag() { window.dataLayer.push(arguments); }
+            // gtag("event", "GAStartTrial_SR", {
+            //     "send_to": "G-L79QGQVFDR"
+            // });
+            window.wn.showBot()
         });
         window.addEventListener('message', function (event) {
             const isValidJson = (text) => {
