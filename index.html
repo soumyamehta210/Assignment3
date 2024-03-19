@@ -90,7 +90,9 @@
             //     "send_to": "G-L79QGQVFDR"
             // });
             window.WTNT.initChatWidget()
-            window.wn.showBot()
+            setTimeout(() => {
+                window.wn.open()
+            }, 2000)
         });
         window.addEventListener('message', function (event) {
             const isValidJson = (text) => {
