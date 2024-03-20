@@ -78,15 +78,17 @@
         <div id="container2"></div>
     </div>
     <script src="script.js" defer></script>
-    <script src='https://app.wotnot.io/chat-widget/7vKkhRXPreMT072624217092nmHwpF9u.js' defer></script>
+    <script src="https://app.dev.wotnot.io/chat-widget/7MkVBzx7pD46100623816959lsymJNpl.js" hideBotOnLoad="true"
+        defer></script>
     <script defer>
         const button = document.getElementById('iframe-button');
         button.addEventListener('click', function () {
-            window.dataLayer = window.dataLayer || [];
-            function gtag() { window.dataLayer.push(arguments); }
-            gtag("event", "Shaan", {
-                "send_to": "G-MW9ZRN5QDK"
-            });
+            // window.dataLayer = window.dataLayer || [];
+            // function gtag() { window.dataLayer.push(arguments); }
+            // gtag("event", "Shaan", {
+            //     "send_to": "G-MW9ZRN5QDK"
+            // });
+            window.wn.openWindow();
         });
         window.addEventListener('message', function (event) {
             const isValidJson = (text) => {
