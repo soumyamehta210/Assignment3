@@ -96,6 +96,7 @@
             launchWhatsAppSignup()
         });
         window.addEventListener('message', function (event) {
+            console.log(event, "from root")
             if (event.origin !== "https://www.facebook.com") return;
             try {
                 const data = JSON.parse(event.data);
