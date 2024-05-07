@@ -162,6 +162,7 @@
                     // The returned code must be transmitted to your backend, 
                     // which will perform a server-to-server call from there to our servers for an access token
                 } else {
+                    console.log(response, "CANCELLED")
                     console.log('User cancelled login or did not fully authorize.');
                 }
             }, {
@@ -169,33 +170,33 @@
                 response_type: 'code',    // must be set to 'code' for System User access token
                 override_default_response_type: true, // when true, any response types passed in the "response_type" will take precedence over the default types
                 extras: {
-                    setup: {
-                        business: {
-                            name: 'Acme Inc.',
-                            email: 'johndoe@acme.com',
-                            phone: {
-                                code: 1,
-                                number: '6505551234'
-                            },
-                            website: 'https://www.acme.com',
-                            address: {
-                                streetAddress1: '1 Acme Way',
-                                city: 'Acme Town',
-                                state: 'CA',
-                                zipPostal: '94000',
-                                country: 'US'
-                            },
-                            timezone: 'UTC-08:00'
-                        },
-                        phone: {
-                            displayName: 'Acme Inc.',
-                            category: 'ENTERTAIN',
-                            description: 'Gears and widgets'
-                        },
-                        preVerifiedPhone: {
-                            ids: ['106540352242922', '105954558954427']
-                        }
-                    }
+                    // setup: {
+                    //     business: {
+                    //         name: 'Acme Inc.',
+                    //         email: 'johndoe@acme.com',
+                    //         phone: {
+                    //             code: 1,
+                    //             number: '6505551234'
+                    //         },
+                    //         website: 'https://www.acme.com',
+                    //         address: {
+                    //             streetAddress1: '1 Acme Way',
+                    //             city: 'Acme Town',
+                    //             state: 'CA',
+                    //             zipPostal: '94000',
+                    //             country: 'US'
+                    //         },
+                    //         timezone: 'UTC-08:00'
+                    //     },
+                    //     phone: {
+                    //         displayName: 'Acme Inc.',
+                    //         category: 'ENTERTAIN',
+                    //         description: 'Gears and widgets'
+                    //     },
+                    //     preVerifiedPhone: {
+                    //         ids: ['106540352242922', '105954558954427']
+                    //     }
+                    // }
                 }
             });
         }
