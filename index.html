@@ -82,8 +82,8 @@
         <div id="root" style="width: 500px;height: 600px;"></div>
         <script src="https://app.dev.wotnot.io/chat-widget/7MkVBzx7pD46100623816959lsymJNpl.js"
             data-session-payload='{&quot;propertyName&quot;:&quot;True Liverpool, Liverpool&quot;,&quot;propertyId&quot;:166764,&quot;cityName&quot;:&quot;Liverpool&quot;,&quot;chatbotTriggerPoint&quot;:&quot;search_page&quot;,&quot;utm_source&quot;:&quot;{\&quot;initial_referrer\&quot;:\&quot;direct\&quot;,\&quot;referring_domain\&quot;:\&quot;https://pr-5568-ecs.staging-amber.com/places/search/liverpool-1811029039831\&quot;,\&quot;initial_referring_domain\&quot;:\&quot;https://pr-5568-ecs.staging-amber.com/places/search/liverpool-1811029039831\&quot;}&quot;}'
-            data-embed-metadata="{"
-            bot_publish_key":"3QgxdBi5Znou062016936329JwX6zovZ","display_header":false,"history_retention":false}">
+            data-embed-metadata='{"
+            bot_publish_key":"3QgxdBi5Znou062016936329JwX6zovZ","display_header":false,"history_retention":false}'>
             </script>
 
         <div id="container2"></div>
@@ -91,38 +91,22 @@
     <script src="script.js" defer></script>
 
     <script defer>
-        const button = document.getElementById('iframe-button');
-        button.addEventListener('click', function () {
-            // window.dataLayer = window.dataLayer || [];
-            // function gtag() { window.dataLayer.push(arguments); }
-            // gtag("event", "Shaan", {
-            //     "send_to": "G-MW9ZRN5QDK"
-            // });
-            // window.wn.showWidget(true);
-            // launchWhatsAppSignup()
-            window.location.reload();
-        });
-        window.addEventListener('message', function (event) {
-            if (event.origin !== "https://www.facebook.com") return;
-            try {
-                const data = JSON.parse(event.data);
-                if (data.type === 'WA_EMBEDDED_SIGNUP') {
-                    // if user finishes the Embedded Signup flow
-                    if (data.event === 'FINISH') {
-                        const { phone_number_id, waba_id } = data.data;
-                        console.log(phone_number_id, waba_id, "phone_number_id, waba_id")
-                    }
-                    // if user cancels the Embedded Signup flow
-                    else {
-                        const { current_step } = data.data;
-                        console.log("USER STOPPED HERE", current_step)
-                    }
-                }
-            } catch {
-                // Don’t parse info that’s not a JSON
-                console.log('Non JSON Response', event.data);
-            }
-            // const isValidJson = (text) => {
+        const button = document.getElementById(' iframe-button'); button.addEventListener('click', function () { //
+            window.dataLayer = window.dataLayer || []; // function gtag() { window.dataLayer.push(arguments); } //
+            gtag("event", "Shaan", { // "send_to" : "G-MW9ZRN5QDK" // }); // window.wn.showWidget(true); //
+                launchWhatsAppSignup() window.location.reload();
+            }); window.addEventListener('message', function (event) {
+                if (event.origin !== "https://www.facebook.com") return; try {
+                    const data = JSON.parse(event.data); if
+                        (data.type === 'WA_EMBEDDED_SIGNUP') { // if user finishes the Embedded Signup flow if (data.event==='FINISH'
+            ) {
+                const { phone_number_id, waba_id } = data.data; console.log(phone_number_id,
+                    waba_id, "phone_number_id, waba_id")
+            } // if user cancels the Embedded Signup flow else { const {
+            current_step
+        }=data.data; console.log("USER STOPPED HERE", current_step) } } } catch { // Don’t parse info
+            that’s not a JSON console.log('Non JSON Response', event.data);
+        } // const isValidJson=(text)=> {
             //     try {
             //         JSON.parse(text);
             //         return true;
