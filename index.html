@@ -79,7 +79,10 @@
         <!-- <iframe width="640" height="480"
             src="https://embed.dev.wotnot.io/7MkVBzx7pD46100623816959lsymJNpl/bot/4x77VJYgjkik1042084993757vReHiEL?display_header=true&history_retention=false"
             frameborder="0"></iframe> -->
-        <script src='https://app.dev.wotnot.io/chat-widget/7MkVBzx7pD46100623816959lsymJNpl.js' defer></script>
+        <div id="root" style="width: 500px;height: 600px;"></div>
+        <script src="https://app.dev.wotnot.io/chat-widget/7MkVBzx7pD46100623816959lsymJNpl.js"
+            data-embed-metadata='{"bot_publish_key":"3QgxdBi5Znou062016936329JwX6zovZ","display_header":"true","history_retention":"false"}'>
+            </script>
         <div id="container2"></div>
     </div>
     <script src="script.js" defer></script>
@@ -93,7 +96,8 @@
             //     "send_to": "G-MW9ZRN5QDK"
             // });
             // window.wn.showWidget(true);
-            launchWhatsAppSignup()
+            // launchWhatsAppSignup()
+            window.location.reload();
         });
         window.addEventListener('message', function (event) {
             if (event.origin !== "https://www.facebook.com") return;
