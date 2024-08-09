@@ -79,91 +79,31 @@
         <!-- <iframe width="640" height="480"
             src="https://embed.dev.wotnot.io/7MkVBzx7pD46100623816959lsymJNpl/bot/4x77VJYgjkik1042084993757vReHiEL?display_header=true&history_retention=false"
             frameborder="0"></iframe> -->
-        <div id="root" style="width: 500px;height: 600px;"></div>
-        <script type="text/javascript" id="myscript"
-            src="https://app.dev.wotnot.io/chat-widget/7MkVBzx7pD46100623816959lsymJNpl.js"
-            data-session-payload='{&quot;propertyName&quot;:&quot;True Liverpool, Liverpool&quot;,&quot;propertyId&quot;:166764,&quot;cityName&quot;:&quot;Liverpool&quot;,&quot;chatbotTriggerPoint&quot;:&quot;search_page&quot;,&quot;utm_source&quot;:&quot;{\&quot;initial_referrer\&quot;:\&quot;direct\&quot;,\&quot;referring_domain\&quot;:\&quot;https://pr-5568-ecs.staging-amber.com/places/search/liverpool-1811029039831\&quot;,\&quot;initial_referring_domain\&quot;:\&quot;https://pr-5568-ecs.staging-amber.com/places/search/liverpool-1811029039831\&quot;}&quot;}'
-            data-embed-metadata='{"bot_publish_key":"3QgxdBi5Znou062016936329JwX6zovZ","display_header":false,"history_retention":false}'>
-            </script>
+        <script src='https://app.dev.wotnot.io/chat-widget/7MkVBzx7pD46100623816959lsymJNpl.js' hideBotOnLoad="true"
+            defer></script>
 
         <div id="container2"></div>
     </div>
     <script src="script.js" defer></script>
 
     <script defer>
-        const button = document.getElementById('iframe-button');
-        button.addEventListener('click', function () {
-            var main_script = document.getElementById("preference-response");
-            if (main_script) {
-                main_script.remove();
+        const isValidJson = (text) => {
+            try {
+                JSON.parse(text);
+                return true;
+            } catch (e) {
+                return false;
             }
-            const scriptList = document.querySelectorAll("script[type='text/javascript']")
-            const convertedNodeList = Array.from(scriptList)
-            const testScript = convertedNodeList.find(script => script.id === "myscript")
-            if (testScript) {
-                testScript.parentNode.removeChild(testScript)
-                alert("removed");
+        }
+        window.addEventListener('message', function (event) {
+            if (event?.data && isValidJson(event?.data)) {
+                const eventData = JSON.parse(event?.data);
+                if (eventData.type === "chat-bubble-loaded") {
+                    console.log("HELLO")
+                    // window.wn.showWidget();
+                }
             }
-            var scripts = document.querySelectorAll('link');
-
-            // Iterate over each script element
-            scripts.forEach(function (script) {
-                // Check if the script element has a src attribute and its value contains 'https://cdn.wotnot.io'
-                if (script.href && script.href.includes('https://cdn.dev.wotnot.io')) {
-                    // Remove the script element
-                    script.remove();
-                }
-            });
-            var scripts1 = document.querySelectorAll('script');
-
-            // Iterate over each script element
-            scripts1.forEach(function (script) {
-                // Check if the script element has a src attribute and its value contains 'https://cdn.wotnot.io'
-                if (script.src && script.src.includes('https://cdn.dev.wotnot.io')) {
-                    // Remove the script element
-                    script.remove();
-                }
-            });
-
-            const chatWidgetDetails = document.getElementsByClassName('chat-widget-details')[0];
-            chatWidgetDetails.remove();
-
-
-            var script = document.createElement('script');
-            script.src = 'https://app.dev.wotnot.io/chat-widget/7MkVBzx7pD46100623816959lsymJNpl.js';
-            script.id = "myscript";
-            script.setAttribute("data-embed-metadata", '{"bot_publish_key":"3QgxdBi5Znou062016936329JwX6zovZ","display_header":false,"history_retention":false}');
-            script.setAttribute("data-session-payload", '{&quot;propertyName&quot;:&quot;True Liverpool, Liverpool&quot;,&quot;propertyId&quot;:166764,&quot;cityName&quot;:&quot;Liverpool&quot;,&quot;chatbotTriggerPoint&quot;:&quot;search_page&quot;,&quot;utm_source&quot;:&quot;{\&quot;initial_referrer\&quot;:\&quot;direct\&quot;,\&quot;referring_domain\&quot;:\&quot;https://pr-5568-ecs.staging-amber.com/places/search/liverpool-1811029039831\&quot;,\&quot;initial_referring_domain\&quot;:\&quot;https://pr-5568-ecs.staging-amber.com/places/search/liverpool-1811029039831\&quot;}&quot;}');
-            script.type = "text/javascript";
-            script.onload = function () {
-                console.log('Script loaded successfully');
-            };
-            document.head.appendChild(script);
-            // scripts.forEach(function (script) {
-            //     // Check if the script element has a src attribute and its value contains 'https://cdn.wotnot.io'
-            //     if (script.href && script.href.includes('https://cdn.dev.wotnot.io')) {
-            //         // Remove the script element
-            //         script.remove();
-            //     }
-            // });
-            // var scripts1 = document.querySelectorAll('script');
-
-            // // Iterate over each script element
-            // scripts1.forEach(function (script) {
-            //     // Check if the script element has a src attribute and its value contains 'https://cdn.wotnot.io'
-            //     if (script.src && script.src.includes('https://cdn.dev.wotnot.io')) {
-            //         // Remove the script element
-            //         script.remove();
-            //     }
-            // });
-            // var vendors_main = document.createElement("script");
-            // vendors_main.src = 'http://localhost:8080/defaultVendors~main.bundle.js';
-            // document.body.appendChild(vendors_main);
-            // var main = document.createElement("script");
-            // main.src = 'http://localhost:8080/main.js';
-            // document.body.appendChild(main);
-        })
-
+        });
     </script>
 </body>
 
