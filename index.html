@@ -12,27 +12,179 @@
 </head>
 
 <body>
+    <br><br><br>
+    <button id="startBtn">Start Recording</button>
+    <button id="stopBtn" disabled>Stop Recording</button>
+    <button id="stopBtn" onclick="playAudio()">Play audio</button>
+    <br><br><br><br><br><br><br>
+    <textarea id="output" rows="10" cols="80"></textarea>
+    <script>
+        let recorder;
+        let socket;
+        const startBtn = document.getElementById('startBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const output = document.getElementById('output');
+        let recordedChunks = []; // Store actual Blob parts
 
-    <div class="container">
-        <div>Trying out the sample of transparent bots</div>
-        <div id="root"
-            style="height: 500px; width: 600px; box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16); background-color: #ffffff; display: block;">
-        </div>
-    </div>
+        // Audio analysis variables
+        let audioContext;
+        let analyser;
+        let silenceDetectionActive = false;
+        const silenceThreshold = 0.06; // Adjust based on testing
+        const maxSilenceDuration = 3000; // milliseconds
+        let silenceStart;
 
+        async function mergeBlobsToBase64(blobArray, mimeType = 'audio/webm') {
+            // 1. Merge all Blobs into a single Blob
+            const mergedBlob = new Blob(blobArray, { type: mimeType });
 
+            // 2. Convert Blob to Base64
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    // Extract Base64 part (remove data:audio/webm;base64, prefix)
+                    const base64String = reader.result.split(',')[1];
+                    resolve(base64String);
+                };
+                reader.onerror = reject;
+                reader.readAsDataURL(mergedBlob);
+            });
+        }
 
-    <script src='https://app.dev.wotnot.io/chat-widget/7MkVBzx7pD46100623816959lsymJNpl.js' widget-container-id="root"
-        defer></script>
+        startBtn.onclick = async () => {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            recorder = new MediaRecorder(stream);
+            recordedChunks = [];
+
+            // Initialize audio context and analyzer
+            audioContext = new AudioContext();
+            analyser = audioContext.createAnalyser();
+            const microphone = audioContext.createMediaStreamSource(stream);
+            microphone.connect(analyser);
+            analyser.fftSize = 2048;
+
+            // Connect to WebSocket
+            socket = new WebSocket('ws://localhost:3000');
+
+            socket.onmessage = event => {
+                const base64String = event.data;
+                const binaryString = atob(base64String);
+                const len = binaryString.length;
+                const bytes = new Uint8Array(len);
+
+                for (let i = 0; i < len; i++) {
+                    bytes[i] = binaryString.charCodeAt(i);
+                }
+
+                const blob = new Blob([bytes], { type: 'audio/webm' });
+                const audioURL = URL.createObjectURL(blob);
+                const audio = new Audio(audioURL);
+                audio.play();
+            };
+
+            recorder.ondataavailable = async event => {
+                console.log("Hello")
+                if (event.data.size > 0) {
+                    recordedChunks.push(event.data); // Save raw blob parts
+                    const base64Chunk = await blobToBase64(event.data);
+                    output.value += base64Chunk.slice(0, 30) + '...\n';
+
+                    if (socket.readyState === WebSocket.OPEN) {
+                        socket.send(base64Chunk);
+                    }
+                }
+            };
+
+            // Start silence detection
+            silenceDetectionActive = true;
+            silenceStart = performance.now();
+            checkSilence();
+
+            recorder.start(); // Timeslice = 1s
+            startBtn.disabled = true;
+            stopBtn.disabled = false;
+        };
+
+        stopBtn.onclick = () => {
+            stopRecording();
+        };
+
+        function stopRecording() {
+            console.log("silence deteced!!!!")
+            if (recorder && recorder.state !== 'inactive') {
+                console.log("stopped recording", recorder)
+                recorder.requestData();
+            }
+            if (socket) {
+                socket.close();
+            }
+
+            // Close audio context if it exists
+        }
+
+        function blobToBase64(blob) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    const base64data = reader.result.split(',')[1];
+                    resolve(base64data);
+                };
+                reader.onerror = reject;
+                reader.readAsDataURL(blob);
+            });
+        }
+
+        function checkSilence() {
+            if (!silenceDetectionActive) return;
+
+            const dataArray = new Uint8Array(analyser.frequencyBinCount);
+            analyser.getByteTimeDomainData(dataArray);
+
+            let sum = 0;
+            for (let i = 0; i < dataArray.length; i++) {
+                const normalized = (dataArray[i] - 128) / 128;
+                sum += normalized * normalized;
+            }
+            const volume = Math.sqrt(sum / dataArray.length);
+
+            if (volume < silenceThreshold) {
+                if (performance.now() - silenceStart > maxSilenceDuration) {
+                    stopRecording();
+                    mergeBlobsToBase64(recordedChunks)
+                        .then(base64String => {
+                            console.log("Full Base64 audio:", base64String);
+                            // Use the Base64 string (e.g., send to server, store in DB, etc.)
+                        })
+                        .catch(error => {
+                            console.error("Conversion failed:", error);
+                        });
+                    return;
+                }
+            } else {
+                silenceStart = performance.now();
+            }
+
+            requestAnimationFrame(checkSilence);
+        }
+
+        function playAudio() {
+            if (recordedChunks.length === 0) {
+                console.warn("No audio recorded.");
+                return;
+            }
+
+            // Combine all Blob chunks into one
+            const fullBlob = new Blob(recordedChunks, { type: "audio/webm" });
+            const audioURL = URL.createObjectURL(fullBlob);
+            const audio = new Audio(audioURL);
+            audio.play().catch(e => {
+                console.error("Audio play failed:", e);
+            });
+        }
+    </script>
+    <script src='https://app.dev.wotnot.io/chat-widget/7MkVBzx7pD46100623816959lsymJNpl.js' defer></script>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-MW9ZRN5QDK"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-
-        gtag('config', 'G-MW9ZRN5QDK');
-    </script>
 </body>
 
 </html>
