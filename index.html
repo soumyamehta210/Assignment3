@@ -18,6 +18,9 @@
     <button id="stopBtn" onclick="playAudio()">Play audio</button>
     <br><br><br><br><br><br><br>
     <textarea id="output" rows="10" cols="80"></textarea>
+    <iframe width="640" height="480"
+        src="https://embed.dev.wotnot.io/4g96HFUC7zkc0910496115822eP9lfZj/bot/54G67cNMa2Fr055411813848b4oK86iT?display_header=false&history_retention=false"
+        frameborder="0"></iframe>
     <script>
         let recorder;
         let socket;
@@ -181,6 +184,24 @@
                 console.error("Audio play failed:", e);
             });
         }
+
+        const isValidJson = (text) => {
+            try {
+                JSON.parse(text);
+                return true;
+            } catch (e) {
+                return false;
+            }
+        };
+
+        window.addEventListener("message", function (event) {
+            if (event?.data && isValidJson(event?.data)) {
+                const eventData = JSON.parse(event.data)
+                console.log(eventData);
+            }
+        });
+
+
     </script>
     <script src='https://app.dev.wotnot.io/chat-widget/7MkVBzx7pD46100623816959lsymJNpl.js' defer></script>
     <!-- Google tag (gtag.js) -->
